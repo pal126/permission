@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * spring全局异常处理
  * @author pal
- * @data 2018/06/05
  */
 @Slf4j
 public class SpringExceptionResolver implements HandlerExceptionResolver {
