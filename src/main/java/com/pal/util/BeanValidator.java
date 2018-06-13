@@ -11,5 +11,6 @@ public class BeanValidator {
 
     public static <T> Map<String, String> validate(T t, Class... groups) {
         Validator validator = validatorFactory.getValidator();
+        return null;
     }
 }
