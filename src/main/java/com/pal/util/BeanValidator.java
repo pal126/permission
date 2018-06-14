@@ -1,6 +1,10 @@
 package com.pal.util;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.pal.exception.ParamException;
+import org.apache.commons.collections.MapUtils;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -28,5 +32,33 @@ public class BeanValidator {
         }
     }
 
+    public static Map<String, String> validateList(Collection<?> collection) {
+        Preconditions.checkNotNull(collection);
+        Iterator iterator = collection.iterator();
+        Map errors;
+        do {
+            if (!iterator.hasNext()) {
+                return Collections.emptyMap();
+            }
+            Object object = iterator.next();
+            errors = validate(object, new Class[0]);
+        } while (errors.isEmpty());
+        return errors;
+    }
+
+    public static Map<String, String> validateObject(Object first, Object... objects) {
+        if (objects != null && objects.length > 0) {
+            return validateList(Lists.asList(first, objects));
+        } else {
+            return validate(first, new Class[0]);
+        }
+    }
+
+    public static void check(Object param) throws ParamException {
+        Map<String, String> map = BeanValidator.validateObject(param);
+        if (MapUtils.isNotEmpty(map)) {
+            throw new ParamException(map.toString());
+        }
+    }
 
 }
