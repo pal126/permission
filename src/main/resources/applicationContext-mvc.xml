@@ -10,9 +10,15 @@
     <!-- 启动注解驱动的spring mvc功能 -->
     <mvc:annotation-driven/>
 
+    <mvc:interceptors>
+        <bean class="com.pal.common.HttpInterceptor"/>
+    </mvc:interceptors>
+
     <!-- 启动包扫描功能 -->
     <context:component-scan base-package="com.pal.controller"/>
     <!--<context:component-scan base-package="com.pal.service"/>-->
+
+    <bean class="com.pal.common.ApplicationContextHelper" lazy-init="false"/>
 
     <bean class="com.pal.common.SpringExceptionResolver" />
 
